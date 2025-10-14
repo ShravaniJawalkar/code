@@ -1,0 +1,53 @@
+package org.example;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+public class Main {
+    public static void main(String[] args) {
+
+        String s= " shravani is interviewing for the role  of aws api architect" ;
+        String result = Arrays.stream(s.split(" ")).sorted().map(e->e+" ").collect(Collectors.joining()).toString();
+
+        System.out.println(result);
+        System.out.println(findPair(new int[]{1, 1, 1, 1},2));
+
+    }
+
+    private static String findPair(int[] nums, int targetValue){
+        if(nums.length<2)
+            return "No pairs found";
+        Arrays.sort(nums);
+        List<String> l = new ArrayList<>();
+        int left=0,right=nums.length-1;
+
+            while (left<right){
+                int current_sum=nums[left]+nums[right];
+                if(current_sum==targetValue){
+                   l.add("("+nums[left]+", "+nums[right]+")");
+                   left++;
+                   right--;
+                }else if(current_sum<targetValue){
+                    left++;
+                }else {
+                    right--;
+                }
+            }
+            if(l.isEmpty()){
+                return "No pairs found";
+            }
+        return String.join(" ",l);
+    }
+}
+
+//"Given an array of integers, find all pairs of numbers that sum up to a target value. Each number can only be used once."
+// Test Case 1 int[] arr1 = {2, 4, 3, 5, 6, 2, 4}; int target1 = 8; // Expected output: (2,6), (4,4), (3,5)
+// Test Case 2 int[] arr2 = {1, 1, 1, 1}; int target2 = 2; // Expected output: (1,1), (1,1)
+// Test Case 3 int[] arr3 = {1, 2, 3, 4, 5}; int target3 = 10; // Expected output: No pairs found
+
+
+//2, 2, 3 ,4 ,4 ,5, 6
