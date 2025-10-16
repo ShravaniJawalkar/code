@@ -1,0 +1,55 @@
+/**
+ * Calculates and prints the days (1-indexed) that yield the maximum profit.
+ * The logic is to iterate through the array, tracking the lowest price seen so far 
+ * and the maximum profit achieved using that lowest price.
+ * * @param array The array of stock prices, where index i corresponds to Day i+1.
+ */
+public void maximumProfit(int[] array) {
+    // Basic input validation
+    if (array == null || array.length < 2) {
+        System.out.println("Cannot calculate profit: Need at least two days of prices.");
+        return;
+    }
+
+    // Initialize tracking variables
+    // minPrice: The lowest price seen up to the current day (i-1).
+    int minPrice = array[0];
+    
+    // maxProfit: The overall maximum profit found so far.
+    int maxProfit = 0;
+    
+    // bestBuyDayIndex: The 0-indexed day of the best buy price.
+    int bestBuyDayIndex = 0;
+    
+    // bestSellDayIndex: The 0-indexed day of the best sell price.
+    int bestSellDayIndex = 0;
+    
+    // currentBuyDayIndex: The 0-indexed day where 'minPrice' was recorded.
+    int currentBuyDayIndex = 0;
+
+    // Loop through the array starting from the second day (index 1)
+    // FIX: Corrected 'arrays.length' to 'array.length'
+    for (int i = 1; i < array.length; i++) {
+        int currentPrice = array[i];
+
+        // 1. Calculate profit using the lowest price seen so far
+        int currentProfit = currentPrice - minPrice;
+        
+        // 2. Update the overall maximum profit and record the corresponding days
+        if (currentProfit > maxProfit) {
+            maxProfit = currentProfit;
+            bestBuyDayIndex = currentBuyDayIndex; // Day the current 'minPrice' was set
+            bestSellDayIndex = i;                 // Current sell day
+        }
+
+        // 3. Update the minimum price and its corresponding day
+        // This must be done *after* checking for max profit, as we can't buy and sell on the same day.
+        if (currentPrice < minPrice) {
+            minPrice = currentPrice;
+            currentBuyDayIndex = i;
+        }
+    }
+    
+    // Output the result in the requested format (converting 0-indexed to 1-indexed Day numbers)
+    System.out.println("Output: Day-" + (bestBuyDayIndex + 1) + " & Day-" + (bestSellDayIndex + 1));
+}
