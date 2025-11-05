@@ -1,0 +1,35 @@
+import java.util.*;
+
+public class GoodsNotification {
+    public static void main(String[] args) {
+        // Map goods to their sale days
+        Map<String, String> goodsSales = new HashMap<>();
+        goodsSales.put("electronics", "mon");
+        goodsSales.put("cloths", "wed");
+        goodsSales.put("food", "fri");
+
+        // List of business days
+        List<String> businessDays = Arrays.asList("mon", "tue", "wed", "thu", "fri");
+
+        // Store notifications
+        Map<String, String> notifications = new HashMap<>();
+
+        for (Map.Entry<String, String> entry : goodsSales.entrySet()) {
+            String good = entry.getKey();
+            String saleDay = entry.getValue();
+            int idx = businessDays.indexOf(saleDay);
+            int notifyIdx = idx - 2;
+            // Wrap around if negative
+            if (notifyIdx < 0) {
+                notifyIdx += businessDays.size();
+            }
+            String notifyDay = businessDays.get(notifyIdx);
+            notifications.put(good, notifyDay);
+        }
+
+        // Print notifications
+        for (Map.Entry<String, String> entry : notifications.entrySet()) {
+            System.out.println("Notify for " + entry.getKey() + " on " + entry.getValue());
+        }
+    }
+}
